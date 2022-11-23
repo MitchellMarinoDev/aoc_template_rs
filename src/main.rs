@@ -7,6 +7,7 @@ const CURRENT_DAY: usize = 0;
 
 fn main() {
     let args = args::Args::parse();
+    args.apply_color_option();
     println!("{}", args.header());
 
     match args.day {
