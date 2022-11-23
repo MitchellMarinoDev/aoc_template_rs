@@ -8,3 +8,4 @@ description = "My Advent of Code solutions for 2022 in Rust!"
 
 [dependencies]
 clap = { version = "4.0", features = ["derive"] }
+colored = "2.0"
