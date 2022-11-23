@@ -1,7 +1,7 @@
-use clap::{Parser, ValueEnum};
-use colored::Colorize;
-use colored::control::{set_override, unset_override};
 use crate::CURRENT_DAY;
+use clap::{Parser, ValueEnum};
+use colored::control::{set_override, unset_override};
+use colored::Colorize;
 
 #[derive(Debug, Default, Copy, Clone, Eq, PartialEq, Hash, ValueEnum)]
 pub enum ColorOptions {
@@ -10,6 +10,8 @@ pub enum ColorOptions {
     Always,
     Never,
 }
+
+// TODO: add input dir.
 
 #[derive(Parser)]
 #[command(author, version, about)]
@@ -30,6 +32,10 @@ pub struct Args {
     #[arg(default_value_t = ColorOptions::Auto)]
     pub color: ColorOptions,
 
+    #[arg(short, long)]
+    #[arg(default_value_t = String::from("./input/"))]
+    pub input_path: String,
+
     /// Don't print a header before solving.
     #[arg(short, long)]
     pub no_header: bool,
@@ -38,18 +44,26 @@ pub struct Args {
 impl Args {
     /// Builds a string for a header of what days will be solved.
     pub fn header(&self) -> String {
-        if self.no_header { return String::new(); }
+        if self.no_header {
+            return String::new();
+        }
 
         let day = self.day.unwrap_or(CURRENT_DAY);
 
         if CURRENT_DAY == 0 {
-            format!("No days implemented yet. Change {} in {} to get started.", "CURRENT_DAY".bold(), "main.rs".bold())
-        }
-        else if CURRENT_DAY == 1 || !self.all {
+            format!(
+                "No days implemented yet. Change {} in {} to get started.",
+                "CURRENT_DAY".bold(),
+                "main.rs".bold()
+            )
+        } else if CURRENT_DAY == 1 || !self.all {
             format!("Solving day {}", day.to_string().bold().green())
-        }
-        else {
-            format!("Solving days {}-{}", 1.to_string().bold().green(), day.to_string().bold().green())
+        } else {
+            format!(
+                "Solving days {}-{}",
+                1.to_string().bold().green(),
+                day.to_string().bold().green()
+            )
         }
     }
 
@@ -74,7 +88,7 @@ fn valid_day(s: &str) -> Result<usize, String> {
     }
 
     if day <= CURRENT_DAY {
-        return Err(format!("day `{}` isn't implemented yet", day))
+        return Err(format!("day `{}` isn't implemented yet", day));
     }
 
     Ok(day)

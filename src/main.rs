@@ -12,10 +12,14 @@ fn main() {
 
     match args.day {
         None => {
-            let results: Vec<_> = days::DAYS.iter().take(CURRENT_DAY).map(|d| d()).collect();
-        },
+            let results: Vec<_> = days::DAYS
+                .iter()
+                .take(CURRENT_DAY)
+                .map(|d| d.solve(&args.input_path))
+                .collect();
+        }
         Some(day) => {
-            let result = days::DAYS[day]();
-        },
+            let result = days::DAYS[day].solve(&args.input_path);
+        }
     }
 }
