@@ -1,4 +1,3 @@
-mod day;
 mod d01;
 mod d02;
 mod d03;
@@ -24,6 +23,7 @@ mod d22;
 mod d23;
 mod d24;
 mod d25;
+mod day;
 
 pub use day::{Day, Solution};
 

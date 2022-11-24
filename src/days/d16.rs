@@ -1,5 +1,3 @@
-pub fn solve(input: String) -> (String, String) {
-
-
+pub fn solve(_input: String) -> (String, String) {
     ("".into(), "".into())
 }
