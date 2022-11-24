@@ -26,7 +26,7 @@ crate to color and bold output.
 
 ## Get Started
 
-Clone the repo with 
+On GitHub, click "Use this template". Or you can clone it with 
 `git clone https://github.com/MitchellMarinoDev/aoc_template_rs.git`.
 First, download your input, and put it in the `./input/` folder. Then, just write
 your day 1 code in `./src/days/d1.rs`. As you work though the puzzles, increment 
