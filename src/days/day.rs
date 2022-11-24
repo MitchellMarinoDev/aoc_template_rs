@@ -1,3 +1,4 @@
+use crate::solutions::SOLUTIONS;
 use colored::Colorize;
 use std::path::{Path, PathBuf};
 use std::time::{Duration, Instant};
@@ -37,13 +38,13 @@ impl Day {
 
 pub struct Solution {
     /// The day that this is the solution for.
-    day: usize,
+    pub day: usize,
     /// The solution to part1.
-    p1: String,
+    pub p1: String,
     /// The solution to part2.
-    p2: String,
+    pub p2: String,
     /// The time that it took to solve.
-    duration: Duration,
+    pub duration: Duration,
 }
 
 impl Solution {
@@ -57,8 +58,28 @@ impl Solution {
             )
             .bold()
         );
-        println!("    {} {}", "p1:".bold().blue(), self.p1.bold().green());
-        println!("    {} {}", "p2:".bold().blue(), self.p2.bold().green());
+        let mut p1 = format!("    p1: {}", self.p1).bold();
+        let mut p2 = format!("    p2: {}", self.p2).bold();
+
+        // color the outputs: blue if no known solution, green if correct, red if wrong
+        if SOLUTIONS[self.day - 1].0.is_empty() {
+            p1 = p1.blue();
+        } else if SOLUTIONS[self.day - 1].0 == self.p1 {
+            p1 = p1.green();
+        } else {
+            p1 = p1.red();
+        }
+
+        if SOLUTIONS[self.day - 1].1.is_empty() {
+            p2 = p2.blue();
+        } else if SOLUTIONS[self.day - 1].1 == self.p2 {
+            p2 = p2.green();
+        } else {
+            p2 = p2.red();
+        }
+
+        println!("{}", p1);
+        println!("{}", p2);
     }
 }
 

@@ -24,6 +24,8 @@ mod d23;
 mod d24;
 mod d25;
 mod day;
+#[cfg(test)]
+mod test;
 
 pub use day::{Day, Solution};
 

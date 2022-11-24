@@ -16,21 +16,25 @@ want
 time. Of course, make sure to run with the `--release` flag before making any 
 optimizations.
  - Pretty output: This template makes use of the [colored](https://docs.rs/colored)
-crate to color and bold output.
-
-### TODO:
-
- - [ ] Add tests and benches for the current day and all days.
- - [ ] Add a place to put the answers once you have solved the puzzles. This will
- be used for the tests.
+crate to color and bold output. The results of your code are colored according to
+`solutions.rs`: blue if you haven't entered a solution yet, green if they match,
+or red if they don't match. 
+ - Tests: If you put your solutions in `solutions.rs`, running `cargo test` will 
+ test the current day. This can be helpful if you want to refactor your solution
+ after you solved it. To test every day, run `cargo test -- --include-ignored`
 
 ## Get Started
 
-On GitHub, click "Use this template". Or you can clone it with 
+1. On GitHub, click "Use this template". Or you can clone it with 
 `git clone https://github.com/MitchellMarinoDev/aoc_template_rs.git`.
-First, download your input, and put it in the `./input/` folder. Then, just write
-your day 1 code in `./src/days/d1.rs`. As you work though the puzzles, increment 
-the `CURRENT_DAY` constant in `main.rs`, so that `cargo run` runs the right puzzle.
+2. Download your input, and put it in the `./input/` folder with the format
+`dXX.txt`. ex. `d05.txt`. 
+3. Just write your day 1 code in `./src/days/d1.rs`. 
+4. As you work though the puzzles, increment the `CURRENT_DAY` constant in 
+`main.rs`, so that `cargo run` runs the right puzzle.
+5. When you solve a puzzle, put your solution in `solutions.rs`. This colors
+your output green or red according to if the solution matches or not, and 
+allows you to do `cargo test` to test your solutions.
 
 ## License
 

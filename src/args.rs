@@ -4,6 +4,7 @@ use colored::control::{set_override, unset_override};
 use colored::Colorize;
 use std::path::{Path, PathBuf};
 
+/// The options for the --color flag.
 #[derive(Debug, Default, Copy, Clone, Eq, PartialEq, Hash, ValueEnum)]
 pub enum ColorOptions {
     #[default]
@@ -27,11 +28,13 @@ pub struct Args {
     #[arg(group = "day_spec")]
     pub all: bool,
 
+    /// How to output colors on the terminal.
     #[arg(short, long)]
     #[arg(value_enum)]
     #[arg(default_value_t = ColorOptions::Auto)]
     pub color: ColorOptions,
 
+    /// The path to look for the puzzle input in.
     #[arg(short, long)]
     input_path: Option<PathBuf>,
 
@@ -71,6 +74,7 @@ impl Args {
         }
     }
 
+    /// Gets the input path, using a default value if unset.
     pub fn input_path(&self) -> &Path {
         match &self.input_path {
             Some(ip) => ip,
