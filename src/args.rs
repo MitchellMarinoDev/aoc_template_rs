@@ -54,12 +54,19 @@ impl Args {
                 "main.rs".bold()
             )
         } else if CURRENT_DAY == 1 || !self.all {
-            format!("Solving day {}", self.day.to_string().bold().green())
+            format!(
+                "{}",
+                format!("Solving day {}", self.day.to_string().green()).bold()
+            )
         } else {
             format!(
-                "Solving days {}-{}",
-                1.to_string().bold().green(),
-                self.day.to_string().bold().green()
+                "{}",
+                format!(
+                    "Solving days {}-{}",
+                    1.to_string().bold().green(),
+                    self.day.to_string().bold().green()
+                )
+                .bold()
             )
         }
     }

@@ -6,7 +6,7 @@ use std::process::exit;
 mod args;
 mod days;
 
-const CURRENT_DAY: usize = 0;
+const CURRENT_DAY: usize = 1;
 
 fn main() {
     let args = Args::parse();
