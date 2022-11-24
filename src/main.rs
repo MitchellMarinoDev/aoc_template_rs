@@ -1,4 +1,7 @@
+use crate::args::Args;
+use crate::days::Solution;
 use clap::Parser;
+use std::process::exit;
 
 mod args;
 mod days;
@@ -6,20 +9,58 @@ mod days;
 const CURRENT_DAY: usize = 0;
 
 fn main() {
-    let args = args::Args::parse();
+    let args = Args::parse();
     args.apply_color_option();
     println!("{}", args.header());
+    check_input_dir(&args);
 
-    match args.day {
-        None => {
-            let results: Vec<_> = days::DAYS
-                .iter()
-                .take(CURRENT_DAY)
-                .map(|d| d.solve(&args.input_path))
-                .collect();
+    if args.all {
+        let solutions: Vec<_> = days::DAYS
+            .iter()
+            .take(CURRENT_DAY)
+            .map(|d| d.solve(&args.input_path()))
+            .collect();
+
+        solutions.iter().for_each(Solution::print);
+    } else {
+        if args.day > CURRENT_DAY {
+            exit(1);
         }
-        Some(day) => {
-            let result = days::DAYS[day].solve(&args.input_path);
+        let solution = days::DAYS[args.day - 1].solve(&args.input_path());
+        solution.print();
+    }
+}
+
+/// Checks if the input files that will be needed exist.
+fn check_input_dir(args: &Args) {
+    if !args.input_path().exists() {
+        panic!(
+            "input path {} does not exist. \
+            Create it or specify a different path with the -i flag",
+            args.input_path().display()
+        );
+    }
+
+    if args.all {
+        for day in days::DAYS.iter().take(CURRENT_DAY) {
+            if !day.input_file(args.input_path()).exists() {
+                panic!(
+                    "input file for day {} does not exist. \
+                    Create it or specify a different path with the -i flag",
+                    day.day
+                );
+            }
+        }
+    } else {
+        if !days::DAYS[args.day - 1]
+            .input_file(args.input_path())
+            .exists()
+        {
+            panic!(
+                "input file for day {} does not exist. \
+                Create it or specify a different path with the -i flag",
+                args.day
+            );
         }
     }
 }

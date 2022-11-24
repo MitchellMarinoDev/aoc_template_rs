@@ -1,7 +1,6 @@
 mod day;
 
-use crate::days::day::Day;
-pub use day::Solution;
+pub use day::{Day, Solution};
 
 pub const DAYS: [Day; 25] = [
     Day::new(01, |_input: String| (String::new(), String::new())),

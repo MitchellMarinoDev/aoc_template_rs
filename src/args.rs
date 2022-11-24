@@ -2,6 +2,7 @@ use crate::CURRENT_DAY;
 use clap::{Parser, ValueEnum};
 use colored::control::{set_override, unset_override};
 use colored::Colorize;
+use std::path::{Path, PathBuf};
 
 #[derive(Debug, Default, Copy, Clone, Eq, PartialEq, Hash, ValueEnum)]
 pub enum ColorOptions {
@@ -11,16 +12,15 @@ pub enum ColorOptions {
     Never,
 }
 
-// TODO: add input dir.
-
-#[derive(Parser)]
+#[derive(Debug, Clone, Eq, PartialEq, Hash, Parser)]
 #[command(author, version, about)]
 pub struct Args {
     /// The day to run. Defaults to the current day.
     #[arg(short, long)]
     #[arg(group = "day_spec")]
     #[arg(value_parser = valid_day)]
-    pub day: Option<usize>,
+    #[arg(default_value_t = CURRENT_DAY)]
+    pub day: usize,
 
     /// A flag that causes all days up to the current day to be ran.
     #[arg(short, long)]
@@ -33,8 +33,7 @@ pub struct Args {
     pub color: ColorOptions,
 
     #[arg(short, long)]
-    #[arg(default_value_t = String::from("./input/"))]
-    pub input_path: String,
+    input_path: Option<PathBuf>,
 
     /// Don't print a header before solving.
     #[arg(short, long)]
@@ -48,8 +47,6 @@ impl Args {
             return String::new();
         }
 
-        let day = self.day.unwrap_or(CURRENT_DAY);
-
         if CURRENT_DAY == 0 {
             format!(
                 "No days implemented yet. Change {} in {} to get started.",
@@ -57,13 +54,20 @@ impl Args {
                 "main.rs".bold()
             )
         } else if CURRENT_DAY == 1 || !self.all {
-            format!("Solving day {}", day.to_string().bold().green())
+            format!("Solving day {}", self.day.to_string().bold().green())
         } else {
             format!(
                 "Solving days {}-{}",
                 1.to_string().bold().green(),
-                day.to_string().bold().green()
+                self.day.to_string().bold().green()
             )
+        }
+    }
+
+    pub fn input_path(&self) -> &Path {
+        match &self.input_path {
+            Some(ip) => ip,
+            None => Path::new("./input/"),
         }
     }
 
@@ -87,7 +91,7 @@ fn valid_day(s: &str) -> Result<usize, String> {
         return Err(format!("`{}` isn't a valid day", day));
     }
 
-    if day <= CURRENT_DAY {
+    if day > CURRENT_DAY {
         return Err(format!("day `{}` isn't implemented yet", day));
     }
 
