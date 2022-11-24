@@ -1,3 +1,5 @@
+// https://adventofcode.com/2022/day/1
+
 pub fn solve(input: String) -> (String, String) {
     // Put your solving code here.
 
