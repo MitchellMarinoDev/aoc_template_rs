@@ -28,7 +28,7 @@ impl Day {
     }
 
     pub fn input_file(&self, input_path: &Path) -> PathBuf {
-        input_path.join(format!("d{}.txt", self.day))
+        input_path.join(format!("d{:02}.txt", self.day))
     }
 
     pub const fn new(day: usize, solver: fn(String) -> (String, String)) -> Self {
