@@ -47,22 +47,23 @@ fn check_input_dir(args: &Args) {
 
     if args.all {
         for day in days::DAYS.iter().take(CURRENT_DAY) {
-            if !day.input_file(args.input_path()).exists() {
+            let input_file_path = day.input_file(args.input_path());
+            if !input_file_path.exists() {
                 panic!(
-                    "input file for day {} does not exist. \
+                    "input file ({}) for day {} does not exist. \
                     Create it or specify a different path with the -i flag",
+                    input_file_path.to_string_lossy(),
                     day.day
                 );
             }
         }
     } else {
-        if !days::DAYS[args.day - 1]
-            .input_file(args.input_path())
-            .exists()
-        {
+        let input_file_path = days::DAYS[args.day - 1].input_file(args.input_path());
+        if !input_file_path.exists() {
             panic!(
-                "input file for day {} does not exist. \
+                "input file ({}) for day {} does not exist. \
                 Create it or specify a different path with the -i flag",
+                input_file_path.to_string_lossy(),
                 args.day
             );
         }
